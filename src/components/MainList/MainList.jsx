@@ -28,15 +28,12 @@ const MainList = () => {
   const loading = isLoadingStatus && !notSearchStatus && ticketsList.length === 0 ? <Spin size="large" /> : null
   const loadingSpin = isLoadingStatus ? <Spin size="large" /> : null
 
-  const notfound = notSearchStatus ? <Alert message="По вашему запросу ничего не найдено" type="warning" /> : null
-
-  const startScreen =
-    !notSearchStatus && !isLoadingStatus && ticketsList.length === 0 ? (
-      <Alert message="Выберите количество пересадок" type="info" />
-    ) : null
+  const notfound = notSearchStatus ? (
+    <Alert message="Рейсов, подходящих под заданные фильтры, не найдено" type="warning" />
+  ) : null
 
   const contentBlock =
-    !startScreen && !notfound && !loading ? (
+    !notfound && !loading ? (
       <Fragment>
         <PriceFilter />
         {loadingSpin}
@@ -48,7 +45,6 @@ const MainList = () => {
   return (
     <div className={classes['main-list']}>
       {loading}
-      {startScreen}
       {contentBlock}
       {notfound}
     </div>

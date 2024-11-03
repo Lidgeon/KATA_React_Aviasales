@@ -31,9 +31,9 @@ export default class TicketapiService extends Component {
     const url = `tickets?searchId=${searchId}`
     const tickets = []
     let continueFetching = true
-    // if (filters.length === 0) {
-    //   continueFetching = false
-    // }
+    if (filters.length === 0) {
+      continueFetching = false
+    }
     while (continueFetching) {
       try {
         const res = await this.getInfo(url)

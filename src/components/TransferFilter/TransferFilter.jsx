@@ -14,9 +14,7 @@ const TransferFilter = () => {
   //console.log('Сейчас в хранилище фильтров следующие фильтры:', selectedFilters)
 
   useEffect(() => {
-    if (selectedFilters.length != 0) {
-      dispatch(addTicketsStatus(selectedFilters))
-    }
+    dispatch(addTicketsStatus(selectedFilters))
   }, [selectedFilters])
 
   const CheckboxGroup = Checkbox.Group
