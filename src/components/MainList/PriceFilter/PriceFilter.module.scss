@@ -1,0 +1,13 @@
+.price-filter * {
+  font-size: 12px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-weight: 500;
+  vertical-align: top;
+}
+
+.price-filter {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}

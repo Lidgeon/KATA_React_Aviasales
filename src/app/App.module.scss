@@ -1,0 +1,32 @@
+$color: #222456;
+$text-color: #4a4a4a;
+
+body {
+  margin: 0;
+  font-family: 'Open Sans';
+  color: $text-color;
+}
+
+h1,
+h2,
+ul,
+span,
+p {
+  margin: 0px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 660px;
+  margin: 0 auto;
+  //border: 2px solid red;;
+}
+
+.ticket-app {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
