@@ -10,9 +10,7 @@ import classes from './MainList.module.scss'
 
 const MainList = () => {
   const dispatch = useDispatch()
-  //const findStatus = useSelector((state) => state.statusReducer.notFindStatus)
   const isLoadingStatus = useSelector((state) => state.statusReducer.isLoadingStatus)
-  //const selectedFilters = useSelector((state) => state.transferFilterReducer.checkedList)
   const ticketsList = useSelector((state) => state.ticketsReducer.ticketsList)
   const findStatus = useSelector((state) => state.statusReducer.findStatus)
   const notSearchStatus = useSelector((state) => state.statusReducer.notSearch)
@@ -35,7 +33,6 @@ const MainList = () => {
   const contentBlock =
     !notfound && !loading ? (
       <Fragment>
-        <PriceFilter />
         {loadingSpin}
         <TicketList />
         <MoreTicketButton />
@@ -44,6 +41,7 @@ const MainList = () => {
 
   return (
     <div className={classes['main-list']}>
+      <PriceFilter />
       {loading}
       {contentBlock}
       {notfound}

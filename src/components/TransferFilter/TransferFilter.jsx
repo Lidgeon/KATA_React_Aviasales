@@ -2,7 +2,7 @@ import { Checkbox } from 'antd'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { inputCheckbox, addTicketsStatus } from './../../actions'
+import { inputCheckbox, filteredTickets } from './../../actions'
 import classes from './TransferFilter.module.scss'
 
 const TransferFilter = () => {
@@ -11,10 +11,9 @@ const TransferFilter = () => {
     return transferFilterReducer.checkedList
   })
   const dispatch = useDispatch()
-  //console.log('Сейчас в хранилище фильтров следующие фильтры:', selectedFilters)
 
   useEffect(() => {
-    dispatch(addTicketsStatus(selectedFilters))
+    dispatch(filteredTickets(selectedFilters))
   }, [selectedFilters])
 
   const CheckboxGroup = Checkbox.Group
@@ -23,7 +22,6 @@ const TransferFilter = () => {
   const [checkedList, setCheckedList] = useState(selectedFilters)
 
   const checkAll = plainOptions.length === checkedList.length
-  const indeterminate = checkedList.length > 0 && checkedList.length < plainOptions.length
   const onChangeTransferFilter = (list) => {
     dispatch(inputCheckbox(list))
     setCheckedList(list)
@@ -37,7 +35,7 @@ const TransferFilter = () => {
   return (
     <div className={classes['transfer-filter']}>
       <span className={classes['transfer-filter__title']}>Количество пересадок</span>
-      <Checkbox indeterminate={indeterminate} onChange={onAllChangeTransferFilter} checked={checkAll}>
+      <Checkbox onChange={onAllChangeTransferFilter} checked={checkAll}>
         Все
       </Checkbox>
       <CheckboxGroup

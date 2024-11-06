@@ -1,4 +1,4 @@
-import logo from '../../resourсes/logo.png'
+import logo from '../../assets/logo.png'
 
 import classes from './Header.module.scss'
 

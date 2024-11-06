@@ -1,22 +1,17 @@
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
 import Ticket from './Ticket/Ticket'
 import classes from './TicketList.module.scss'
 
 const TicketList = () => {
-  const ticketslist = useSelector((state) => state.ticketsReducer.ticketsList)
   const showingTickets = useSelector((state) => state.ticketsReducer.showingTickets)
-  const priceFilter = useSelector((state) => state.priceFilterReducer.value)
+  const ticketsList = useSelector((state) => state.ticketsReducer.ticketsList)
+  const filterTicketsList = useSelector((state) => state.ticketsReducer.filterTicketsList)
   let key = 0
-
-  useEffect(() => {
-    key++
-  }, [priceFilter])
-
+  const showContent = filterTicketsList.length ? filterTicketsList : ticketsList
   return (
     <div className={classes.tickets}>
-      {ticketslist.slice(0, showingTickets).map((ticket) => (
+      {showContent.slice(0, showingTickets).map((ticket) => (
         <Ticket key={key++} ticket={ticket} />
       ))}
     </div>

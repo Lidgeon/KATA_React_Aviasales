@@ -4,23 +4,23 @@ export const lowPrice = () => ({ type: 'Самый дешевый' })
 export const mostFast = () => ({ type: 'Самый быстрый' })
 export const optimal = () => ({ type: 'Оптимальный' })
 
+export const sortedTickets = (sortType) => ({ type: 'sortedTickets', payload: sortType })
+
 export const inputCheckbox = (lists) => ({ type: 'check', payload: lists })
 
-export const addTickets = (filter) => {
+export const addTickets = () => {
   const ticketapi = new TicketapiService()
   return async (dispatch) => {
-    ticketapi.getTickets(filter).then((res) => {
-      dispatch({ type: 'addTickets', tickets: res })
+    ticketapi.getTicketsPack().then((res) => {
+      dispatch({ type: 'addTickets', tickets: res.tickets })
       if (res.length === 0) {
         dispatch(ticketsNotSearch())
       }
-      dispatch(findStatusOff())
     })
   }
 }
-export const addTicketsStatus = (filter) => (dispatch) => {
-  return Promise.all([dispatch(ticketsSearch()), dispatch(findStatusOn()), dispatch(addTickets(filter))])
-}
+
+export const filteredTickets = (filters) => ({ type: 'filteredTickets', payload: filters })
 
 export const showMoreTickets = () => ({ type: 'showMoreTickets' })
 

@@ -22,11 +22,23 @@
   width: 110px;
 }
 
-.price-and-carrier,
+.price-and-carrier {
+  display: flex;
+  justify-content: space-between;
+}
+
 .there-segment,
 .back-segment {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.ticket_2-c {
+  padding-left: 60px;
+}
+
+.ticket_3-c {
+  padding-left: 60px;
 }
 
 .price-and-carrier {

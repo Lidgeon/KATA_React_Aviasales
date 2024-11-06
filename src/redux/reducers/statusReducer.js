@@ -1,5 +1,5 @@
 const initialState = {
-  findStatus: false,
+  findStatus: true,
   isLoadingStatus: false,
   notSearch: false,
 }
