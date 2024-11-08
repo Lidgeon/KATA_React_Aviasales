@@ -13,27 +13,37 @@ export default class TicketapiService extends Component {
       headers: this._headers,
     })
 
-    if (!response.ok) {
+    if (response.ok) {
+      return await response.json()
+    } else if (response.status === 500) {
+      return await response.json()
+    } else {
       throw new Error(`Нет ответа, статус ошибки ${response.status}`)
     }
-    return await response.json()
   }
 
   async getSearchId() {
-    const url = 'search'
-    const res = await this.getInfo(url)
-    return res.searchId
+    try {
+      const url = 'search'
+      const res = await this.getInfo(url)
+      return res.searchId
+    } catch (err) {
+      throw new Error('Ошибка получение ID')
+    }
   }
 
-  async getTicketsPack() {
-    const searchId = await this.getSearchId()
-    let res
-    try {
-      const url = `tickets?searchId=${searchId}`
-      res = await this.getInfo(url)
-      return res
-    } catch (err) {
-      return (res = { tickets: [], stop: true })
+  async getTicketsPack(searchId) {
+    const searchStatus = true
+    while (searchStatus) {
+      try {
+        const url = `tickets?searchId=${searchId}`
+        const res = await this.getInfo(url)
+        return res
+      } catch (err) {
+        if (!err.status === 500) {
+          break
+        }
+      }
     }
   }
 }

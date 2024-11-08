@@ -1,13 +1,13 @@
 import { Radio } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+//import { useEffect } from 'react'
 
-import { lowPrice, mostFast, optimal, sortedTickets } from './../../../actions'
+import { lowPrice, mostFast, optimal } from './../../../actions'
 import classes from './PriceFilter.module.scss'
 
 const PriceFilter = () => {
-  const sortedFilter = useSelector((state) => state.priceFilterReducer.value)
-  const selectedFilters = useSelector((state) => state.transferFilterReducer.checkedList)
+  // const sortedFilter = useSelector((state) => state.priceFilterReducer.value)
+  // const selectedFilters = useSelector((state) => state.transferFilterReducer.checkedList)
 
   const dispatch = useDispatch()
   const onClickLowPrice = () => {
@@ -20,9 +20,9 @@ const PriceFilter = () => {
     dispatch(optimal())
   }
 
-  useEffect(() => {
-    dispatch(sortedTickets(sortedFilter))
-  }, [sortedFilter, selectedFilters])
+  // useEffect(() => {
+  //   dispatch(sortedTickets(sortedFilter))
+  // }, [sortedFilter, selectedFilters])
 
   return (
     <div>

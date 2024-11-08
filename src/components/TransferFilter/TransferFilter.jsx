@@ -1,20 +1,13 @@
 import { Checkbox } from 'antd'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { inputCheckbox, filteredTickets } from './../../actions'
+import { inputCheckbox } from './../../actions'
 import classes from './TransferFilter.module.scss'
 
 const TransferFilter = () => {
-  const selectedFilters = useSelector((state) => {
-    const { transferFilterReducer } = state
-    return transferFilterReducer.checkedList
-  })
+  const selectedFilters = useSelector((state) => state.transferFilterReducer.checkedList)
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(filteredTickets(selectedFilters))
-  }, [selectedFilters])
 
   const CheckboxGroup = Checkbox.Group
   const plainOptions = ['Без пересадок', '1 пересадка', '2 пересадки', '3 пересадки']

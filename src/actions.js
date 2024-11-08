@@ -4,19 +4,31 @@ export const lowPrice = () => ({ type: 'Самый дешевый' })
 export const mostFast = () => ({ type: 'Самый быстрый' })
 export const optimal = () => ({ type: 'Оптимальный' })
 
-export const sortedTickets = (sortType) => ({ type: 'sortedTickets', payload: sortType })
-
 export const inputCheckbox = (lists) => ({ type: 'check', payload: lists })
 
 export const addTickets = () => {
   const ticketapi = new TicketapiService()
+
+  let searchStatus = true
   return async (dispatch) => {
-    ticketapi.getTicketsPack().then((res) => {
-      dispatch({ type: 'addTickets', tickets: res.tickets })
-      if (res.length === 0) {
-        dispatch(ticketsNotSearch())
-      }
+    let searchId
+    await ticketapi.getSearchId().then((res) => {
+      searchId = res
     })
+    do {
+      await ticketapi.getTicketsPack(searchId).then((res) => {
+        if (res.stop === false) {
+          dispatch({ type: 'addTickets', tickets: res.tickets })
+          if (res.length === 0) {
+            dispatch(ticketsNotSearch())
+            dispatch(findStatusOff())
+          }
+        } else {
+          searchStatus = false
+          dispatch(findStatusOff())
+        }
+      })
+    } while (searchStatus)
   }
 }
 
