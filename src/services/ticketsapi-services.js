@@ -7,43 +7,45 @@ export default class TicketapiService extends Component {
     accept: 'application/json',
   }
 
-  async getInfo(url) {
-    const response = await fetch(`${this._baseURL}${url}`, {
-      method: 'GET',
-      headers: this._headers,
-    })
-
-    if (response.ok) {
-      return await response.json()
-    } else if (response.status === 500) {
-      return await response.json()
-    } else {
-      throw new Error(`Нет ответа, статус ошибки ${response.status}`)
-    }
-  }
-
   async getSearchId() {
+    const url = 'search'
     try {
-      const url = 'search'
-      const res = await this.getInfo(url)
+      const response = await fetch(`${this._baseURL}${url}`)
+
+      if (!response.ok) {
+        throw new Error(`Ошибка ${response.status}: ${response.statusText}`)
+      }
+
+      const res = await response.json()
       return res.searchId
-    } catch (err) {
-      throw new Error('Ошибка получение ID')
+    } catch (error) {
+      if (!this.isServerError(error)) {
+        alert(`Ошибка при получении searchId: ${error.message}`)
+      }
+      return null
     }
   }
 
   async getTicketsPack(searchId) {
-    const searchStatus = true
-    while (searchStatus) {
-      try {
-        const url = `tickets?searchId=${searchId}`
-        const res = await this.getInfo(url)
-        return res
-      } catch (err) {
-        if (!err.status === 500) {
-          break
-        }
+    const url = `tickets?searchId=${searchId}`
+    try {
+      const response = await fetch(`${this._baseURL}${url}`)
+
+      if (!response.ok) {
+        throw new Error(`Ошибка ${response.status}: ${response.statusText}`)
       }
+
+      const res = await response.json()
+      return res
+    } catch (error) {
+      if (!this.isServerError(error)) {
+        alert(`Ошибка при получении билетов: ${error.message}`)
+      }
+      return { tickets: [], stop: false }
     }
+  }
+
+  isServerError(error) {
+    return error.message.includes('500') || error.message.includes('Server Error')
   }
 }

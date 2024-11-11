@@ -10,7 +10,6 @@ const TicketList = () => {
   //const filterTicketsList = useSelector((state) => state.ticketsReducer.filterTicketsList)
   const selectedFilters = useSelector((state) => state.transferFilterReducer.checkedList)
   const sortedFilters = useSelector((state) => state.priceFilterReducer.value)
-  const key = () => Date.now() + Math.random() * 10
 
   const filterTickets = (arr, selectedFilters) => {
     return [...arr].filter((res) => {
@@ -71,7 +70,7 @@ const TicketList = () => {
   return (
     <div className={classes.tickets}>
       {showContent.slice(0, showingTickets).map((ticket) => (
-        <Ticket key={key()} ticket={ticket} />
+        <Ticket key={ticket.price * (ticket.thereDuration * ticket.backDuration)} ticket={ticket} />
       ))}
     </div>
   )

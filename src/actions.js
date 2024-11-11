@@ -15,20 +15,24 @@ export const addTickets = () => {
     await ticketapi.getSearchId().then((res) => {
       searchId = res
     })
-    do {
-      await ticketapi.getTicketsPack(searchId).then((res) => {
-        if (res.stop === false) {
-          dispatch({ type: 'addTickets', tickets: res.tickets })
-          if (res.length === 0) {
-            dispatch(ticketsNotSearch())
+    //console.log(searchId)
+    if (searchId) {
+      do {
+        await ticketapi.getTicketsPack(searchId).then((res) => {
+          //console.log(res)
+          if (res.stop === false) {
+            dispatch({ type: 'addTickets', tickets: res.tickets })
+            if (res.length === 0) {
+              dispatch(ticketsNotSearch())
+              dispatch(findStatusOff())
+            }
+          } else {
+            searchStatus = false
             dispatch(findStatusOff())
           }
-        } else {
-          searchStatus = false
-          dispatch(findStatusOff())
-        }
-      })
-    } while (searchStatus)
+        })
+      } while (searchStatus)
+    }
   }
 }
 
